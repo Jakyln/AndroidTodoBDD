@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -51,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
             String lesToDo = todo.getName()+" // "+todo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
             tvTodos.append(lesToDo);
             Log.d("Request" , todo.getName());
+        }
+
+        if(savedInstanceState != null){ //pour éviter que lorsqu'on tourne l'écran, les informations disparaissent (redondant avec bdd?)
+            tvTodos.setText(savedInstanceState.getString(KEY_TODO));
+        }
+
+        else{
+                TodoAsyncTasks todoAsyncTasks = new TodoAsyncTasks();
+                todoAsyncTasks.execute();
         }
 
         /*if(isEmpty){
@@ -158,5 +168,33 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         Log.d(TAG,"SaveInstanceState() called");
+        outState.putString(KEY_TODO,this.tvTodos.getText().toString());
+    }
+
+    public class TodoAsyncTasks extends AsyncTask<String, String, List<Todo>> {
+
+        @Override
+        protected List<Todo> doInBackground(String... strings){
+            TodoDAO todoDao = new TodoDAO(getApplicationContext());
+            List<Todo> responseTodo = new ArrayList<>();
+
+            try {
+                responseTodo = todoDao.list();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return responseTodo;
+        }
+
+        @Override
+        protected void onPostExecute(List<Todo> responseTodo){
+            StringBuilder sb = new StringBuilder();
+
+            for(Todo todo : responseTodo){
+                sb.append(todo.getName() + " // " + todo.getUrgency() + "\n");
+            }
+            tvTodos.setText(sb.toString());
+        }
     }
 }
