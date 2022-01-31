@@ -43,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
         // on récupère les léments du layout
         tvTodos = findViewById(R.id.tvTodos);
 
-
         TodoDAO todoDao = new TodoDAO(this);
         List<Todo> todos = todoDao.list();
         for(Todo todo : todos){
+            tvTodos.append("\n");
+            int id = todo.getId();
+            String lesToDo = todo.getName()+" // "+todo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
+            tvTodos.append(lesToDo);
             Log.d("Request" , todo.getName());
         }
+
         /*if(isEmpty){
             tvTodos.setText("PAS DE TACHES");
             tvTodos.append("\n");
@@ -96,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         // check if the request code is same as what is passed  here it is 2
         if(requestCode==1 && resultCode == RESULT_OK)
         {
-            //isEmpty=false;
-            Todo newTodo = (Todo) data.getSerializableExtra("To Do : ");
-            //String message=data.getStringExtra("To Do : "); //attention, le string doit etre le meme que celui inséré dans le Intent dans AddToDoAcTivity
-            //tvTodos.setText(message);
-            String lesToDo = newTodo.getName()+" // "+newTodo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
+            TodoDAO todoDao = new TodoDAO(this);
+            List<Todo> todos = todoDao.list();
+            Todo lastTodo =  todos.get(todos.size()-1);
             tvTodos.append("\n");
-            //String toDo = todo.getName()+" // "+todo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
-            tvTodos.append(lesToDo);
+
+            String leTodo = lastTodo.getName()+" // "+lastTodo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
+            tvTodos.append(leTodo);
+            Log.d("Request" , lastTodo.getName());
         }
     }
 

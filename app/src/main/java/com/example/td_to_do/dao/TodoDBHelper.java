@@ -20,7 +20,7 @@ public class TodoDBHelper extends SQLiteOpenHelper {
 
     private static final String TODO_TABLE_CREATE =
             "CREATE TABLE " + TODO_TABLE_NAME + " (" +
-                    TODO_KEY + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TODO_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TODO_NAME + " TEXT, " +
                     TODO_URGENCY + " TEXT);" ;
 

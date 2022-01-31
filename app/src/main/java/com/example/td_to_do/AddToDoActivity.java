@@ -90,7 +90,7 @@ public class AddToDoActivity extends AppCompatActivity implements AdapterView.On
                         //Log.d(TAG,"Todo added - Name = " + toDo1.getName() +" - Urgency = " + toDo1.getUrgency());
                         Log.d(TAG,"Todo added - Name = ");
 
-                        String toDo = todo.getName()+" // "+todo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
+                        //String toDo = todo.getName()+" // "+todo.getUrgency(); //Je met le nom et l'urgence dans un même string, puis je l'envoie
                         Intent intent=new Intent();
                         intent.putExtra("To Do : ",todo);
 
