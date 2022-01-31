@@ -14,10 +14,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.td_to_do.dao.TodoDAO;
 import com.example.td_to_do.pojos.Todo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
+////ooooooooo
 import java.util.ArrayList;
 import java.util.List;
 //METTRE EDIT TEXT AU LIEU DE TEXT LAYOUT POUR TODOs
@@ -41,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
         // on récupère les léments du layout
         tvTodos = findViewById(R.id.tvTodos);
+
+
+        TodoDAO todoDao = new TodoDAO(this);
+        List<Todo> todos = todoDao.list();
+        for(Todo todo : todos){
+            Log.d("Request" , todo.getName());
+        }
         /*if(isEmpty){
             tvTodos.setText("PAS DE TACHES");
             tvTodos.append("\n");

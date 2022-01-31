@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.td_to_do.dao.TodoDAO;
 import com.example.td_to_do.pojos.Todo;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -78,7 +79,13 @@ public class AddToDoActivity extends AppCompatActivity implements AdapterView.On
                         //todos.add(new Todo(testName, "testUrgence1"));
                         String urgencyItem = spUrgency.getSelectedItem().toString();
 
+
+                        TodoDAO todoDAO = new TodoDAO(getApplicationContext()); //DAO base de donnée
+
+
                         Todo todo = new Todo (testName, urgencyItem);
+                        todoDAO.add(todo); // DAO base de donnée
+
                         todos.add(todo);
                         //Log.d(TAG,"Todo added - Name = " + toDo1.getName() +" - Urgency = " + toDo1.getUrgency());
                         Log.d(TAG,"Todo added - Name = ");
@@ -97,6 +104,7 @@ public class AddToDoActivity extends AppCompatActivity implements AdapterView.On
 
 
                 }
+
                 else{
                         //on ajoute le input dans name de todos et on met par défaut le urgency à low
                 }
@@ -176,9 +184,6 @@ public class AddToDoActivity extends AppCompatActivity implements AdapterView.On
 
         Log.d(TAG, "onSaveInstanceState() called");
 
-        /*outState.putInt(KEY_INDEX, indexQuestion);
-        outState.putInt(KEY_SCORE, score);*/
-        //outState.putBoolean(KEY_REPLAY, btnReplay.getVisibility() == View.VISIBLE ? true : false);
     }
 
     @Override
